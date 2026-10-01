@@ -2,111 +2,79 @@ package main
 
 import "fmt"
 
-// Slices globales
+// Variables globales
 var productosVendidos []string
 var subtotales []float64
 
-// Función para registrar una venta
+// Registrar una venta
 func RegistrarVenta(nombre string, precio float64, cantidad int) {
 	subtotal := precio * float64(cantidad)
 
 	productosVendidos = append(productosVendidos, nombre)
 	subtotales = append(subtotales, subtotal)
 
-	fmt.Println("Venta registrada correctamente.")
-	fmt.Printf("Producto: %s\n", nombre)
-	fmt.Printf("Subtotal: $%.2f\n", subtotal)
+	fmt.Printf("Venta registrada. Subtotal: $%.2f\n", subtotal)
 }
 
-// Función para mostrar estadísticas
-func MostrarEstadisticas() {
-	if len(productosVendidos) == 0 {
-		fmt.Println("\nNo existen ventas registradas.")
-		return
-	}
-
-	var total float64
-
-	fmt.Println("\n===== ESTADÍSTICAS =====")
-
-	for i := 0; i < len(productosVendidos); i++ {
-		fmt.Printf("%d. %s - $%.2f\n",
-			i+1,
-			productosVendidos[i],
-			subtotales[i])
-
-		total += subtotales[i]
-	}
-
-	fmt.Printf("Total recaudado: $%.2f\n", total)
-}
-
-// Función principal
 func main() {
 
+	var opcion int
+
 	for {
-		fmt.Println("\n===== SISTEMA DE VENTAS =====")
+		fmt.Println("\n===== TIENDA =====")
 		fmt.Println("1. Registrar nueva venta")
 		fmt.Println("2. Mostrar estadísticas")
 		fmt.Println("3. Salir")
 		fmt.Print("Seleccione una opción: ")
-
-		var opcion int
 		fmt.Scan(&opcion)
 
-		switch opcion {
+		if opcion == 1 {
 
-		case 1:
-			fmt.Println("\n===== PRODUCTOS DISPONIBLES =====")
+			fmt.Println("\n--- Productos disponibles ---")
 			fmt.Println("1. Arroz - $1.25")
 			fmt.Println("2. Leche - $0.95")
 			fmt.Println("3. Pan - $0.50")
 
 			var producto int
-			fmt.Print("Seleccione el producto: ")
+			fmt.Print("Seleccione un producto: ")
 			fmt.Scan(&producto)
 
 			var nombre string
 			var precio float64
 
-			switch producto {
-
-			case 1:
+			if producto == 1 {
 				nombre = "Arroz"
 				precio = 1.25
-
-			case 2:
+			} else if producto == 2 {
 				nombre = "Leche"
 				precio = 0.95
-
-			case 3:
+			} else if producto == 3 {
 				nombre = "Pan"
 				precio = 0.50
-
-			default:
+			} else {
 				fmt.Println("Producto no válido.")
 				continue
 			}
 
 			var cantidad int
-			fmt.Print("Ingrese la cantidad vendida: ")
+			fmt.Print("Ingrese la cantidad: ")
 			fmt.Scan(&cantidad)
-
-			if cantidad <= 0 {
-				fmt.Println("La cantidad debe ser mayor que 0.")
-				continue
-			}
 
 			RegistrarVenta(nombre, precio, cantidad)
 
-		case 2:
-			MostrarEstadisticas()
+			fmt.Println("\nVolviendo al menú...")
 
-		case 3:
-			fmt.Println("\nPrograma finalizado.")
-			return
+		} else if opcion == 2 {
 
-		default:
+			fmt.Println("Esta opción todavía no está disponible.")
+
+		} else if opcion == 3 {
+
+			fmt.Println("Programa finalizado.")
+			break
+
+		} else {
+
 			fmt.Println("Opción no válida.")
 		}
 	}
